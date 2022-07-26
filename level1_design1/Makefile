@@ -1,4 +1,4 @@
-# See LICENSE.vyoma for details
+#See LICENSE.vyoma for details
 
 TOPLEVEL_LANG ?= verilog
 
@@ -13,3 +13,4 @@ include $(shell cocotb-config --makefiles)/Makefile.sim
 
 clean_all: clean
 	rm -rf *.xml sim_build __pycache__ 
+

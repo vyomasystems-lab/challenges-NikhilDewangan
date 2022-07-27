@@ -71,6 +71,8 @@ async def test_mux(dut):
     i30 = dut.inp30.value= random.randint(0,3) 
     inp.append(i30)   
 
+    cocotb.log.info('##### CTB: Develop your test here ########')
+    
     for i in range(0,30):
         dut.sel.value = i
         await Timer(2, units='ns')
@@ -80,4 +82,4 @@ async def test_mux(dut):
         # assert dut.out.value == inp[i], "Randomised test failed with: {A} + {B} = {SUM}".format(
         #     A=dut.a.value, B=dut.b.value, SUM=dut.sum.value)
 
-    cocotb.log.info('##### CTB: Develop your test here ########')
+    

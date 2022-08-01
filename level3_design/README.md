@@ -9,21 +9,22 @@ The verification environment is setup using [Vyoma's UpTickPro](https://vyomasys
 The [CoCoTb](https://www.cocotb.org/) based Python test is developed as explained. The test drives inputs to the Design Under Test (updown_counter module here) which takes 5 inputs of 1-bit size named "clk","rst","load","updown", a 4-bit input "data" and provides a 4-bit output "data_out". Depending upon the the value of "updown" the counter starts counting at every clockedge provided reset to be transited from high to low. The data can be loaded to the counter be enabling "load" input for one clock cycle and loading data through "data" port, the counter will take the inputs from "data" port as reference point from where it continous counting.
 
 Here we are verifying 5 scenarios:
-> Reset
-> Up count
-> Down count
-> Up count with data loading
-> Down count with data loading
+> Reset <br />
+> Up count <br />
+> Down count <br />
+> Up count with data loading <br />
+> Down count with data loading <br />
 
-For Reset verification, we check whether the "data_out" is properly made clear(all bits to 0) or not.
-For Up count verification, we check whether the values are getting incremented after every clockedge and if it reaches the limit it should restart the count.
-For Down count verification, we check whether the values are getting decremented after every clockedge and if it reaches the limit it should restart the count.
-For Up count with data loading, here the data which has been loaded after enabling load signal is verified (the counter continous counting up taking data loaded as reference).
-For Down count with data loading, here the data which has been loaded after enabling load signal is verified (the counter continous counting down taking data loaded as refernce)
+For Reset verification, we check whether the "data_out" is properly made clear(all bits to 0) or not.<br />
+For Up count verification, we check whether the values are getting incremented after every clockedge and if it reaches the limit it should restart the count.<br />
+For Down count verification, we check whether the values are getting decremented after every clockedge and if it reaches the limit it should restart the count.<br />
+For Up count with data loading, here the data which has been loaded after enabling load signal is verified (the counter continous counting up taking data loaded as reference).<br />
+For Down count with data loading, here the data which has been loaded after enabling load signal is verified (the counter continous counting down taking data loaded as refernce)<br />
 
 The assert statement is used for comparing the counter's output to the expected value.
 
-The following errors are seen:
+The following errors are seen:<br />
+
 assert(dut.data_out.value == 0000),"rst error, Reset not working properly"
                      AssertionError: rst error, Reset not working properly
                      
@@ -41,28 +42,30 @@ assert (output == present_count),"Error while counting down"
 Output mismatches for the above inputs proving that there is a design bug
 
 ## Design Bug
-Based on the above test input and analysing the design, we see the following
-Bug1:
-always@(posedge clk)
-  begin
-    if(rst)
-      data_out <= 1'b1;         <==== bug1 ( data_out <= 4'b0000 )
+Based on the above test input and analysing the design, we see the following<br />
+Bug1:<br />
+always@(posedge clk)<br />
+  begin<br />
+    if(rst)<br />
+      data_out <= 1'b1;<br />         ==== bug1 ( data_out <= 4'b0000 )
       
-Bug2:
-  else
-      data_out <= ((updown)?(data_out + 1'b1):0);      <=== bug2 (data_out <= ((updown)?(data_out + 1'b1):(data_out - 1'b1); 
-  end
+Bug2:<br />
+  else<br />
+      data_out <= ((updown)?(data_out + 1'b1):0);<br />      === bug2 (data_out <= ((updown)?(data_out + 1'b1):(data_out - 1'b1); 
+  <br />end<br />
       
 
 ## Design Fix
 Updating the design and re-running the test makes the test pass.
 
-![](https://i.imgur.com/5XbL1ZH.png)
+![image_2022-08-01_23-07-18](https://user-images.githubusercontent.com/72139504/182209095-4be2adaf-6e0c-4b7f-9a64-2c59f940e2e9.png)
 
-The updated design is checked in as adder_fix.v
+The updated design is checked in as up_down_counter_fix.v
 
 ## Verification Strategy
+> The count has been verified by taking the previous value of the count in a variable and comparing it with the count value after the clockedge.
 
 ## Is the verification complete ?
+Yes
 
 i.imgur.com/miWGA1o.png

@@ -46,7 +46,7 @@ module seq_detect_1011_fix(seq_seen, inp_bit, reset, clk);
       SEQ_1:
       begin
         if(inp_bit == 1)
-          next_state = SEQ_1;                               // bug1 
+          next_state = SEQ_1;                               // bug1 fix
         else
           next_state = SEQ_10;
       end
@@ -62,7 +62,7 @@ module seq_detect_1011_fix(seq_seen, inp_bit, reset, clk);
         if(inp_bit == 1)
           next_state = SEQ_1011;
         else
-          next_state = SEQ_10;                            // bug2 
+          next_state = SEQ_10;                            // bug2 fix
       end
       SEQ_1011:
       begin 
@@ -72,7 +72,7 @@ module seq_detect_1011_fix(seq_seen, inp_bit, reset, clk);
          else 
          next_state = SEQ_1; 
        
-        //next_state = IDLE;                                // bug3 
+        //next_state = IDLE;                                // bug3 fix
       end
     endcase
   end

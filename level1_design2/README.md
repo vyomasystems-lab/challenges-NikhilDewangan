@@ -6,7 +6,7 @@ The verification environment is setup using [Vyoma's UpTickPro](https://vyomasys
 
 ## Verification Environment
 
-The [CoCoTb](https://www.cocotb.org/) based Python test is developed as explained. The test drives inputs to the Design Under Test (adder module here) which takes in 4-bit inputs *a* and *b* and gives 5-bit output *sum*
+The [CoCoTb](https://www.cocotb.org/) based Python test is developed as explained. The test drives inputs to the Design Under Test (sequence_detector module here) which takes in 1-bit input at every clockedge and generates the output value "1" in the next clocedge whenever the required sequenece of bits ("1011") is detected. *sum*
 
 The values are assigned to the input port using a list
 
